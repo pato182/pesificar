@@ -19,7 +19,7 @@ async function obtenerDolar() {
 }
 
 async function convertirPrecio(element) {
-    if (noConvertir.some(palabraClave => element.innerHTML == palabraClave) || (element.classList.contains("match_subtitle") && element.innerHTML == '')) return
+    if (noConvertir.some(palabraClave => element.innerHTML.includes(palabraClave)) || (element.classList.contains("match_subtitle") && element.innerHTML == '')) return
 
     if (element.firstElementChild?.classList.contains("discount_block") || element.dataset.convertido === "true") return
 
@@ -28,7 +28,9 @@ async function convertirPrecio(element) {
     }
 
     let precioOriginal = parseFloat(element.innerHTML.replace(/[^\d.,]/g, ""))
-    let precioFinal = (precioOriginal * precioDolar).toLocaleString("ES-ar", {minimumFractionDigits:2, maximumFractionDigits: 2})
+    let precioFinal = (precioOriginal * precioDolar)
+    precioFinal += (precioFinal * 21) / 100
+    precioFinal = precioFinal.toLocaleString("ES-ar", {minimumFractionDigits:2, maximumFractionDigits: 2})
     
     element.innerHTML = `ARS$ ${precioFinal}`
     element.dataset.convertido = "true"
