@@ -28,7 +28,9 @@ async function convertirPrecio(element) {
     }
 
     let precioOriginal = parseFloat(element.innerHTML.replace(/[^\d.,]/g, ""))
-    let precioFinal = (precioOriginal * precioDolar).toLocaleString("ES-ar", {minimumFractionDigits:2, maximumFractionDigits: 2})
+    let precioFinal = (precioOriginal * precioDolar)
+    precioFinal += (precioFinal * 21) / 100
+    precioFinal = precioFinal.toLocaleString("ES-ar", {minimumFractionDigits:2, maximumFractionDigits: 2})
     
     element.innerHTML = `ARS$ ${precioFinal}`
     element.dataset.convertido = "true"
