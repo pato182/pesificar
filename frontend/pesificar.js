@@ -19,7 +19,7 @@ async function obtenerDolar() {
 }
 
 async function convertirPrecio(element) {
-    if (noConvertir.some(palabraClave => element.innerHTML == palabraClave) || (element.classList.contains("match_subtitle") && element.innerHTML == '')) return
+    if (noConvertir.some(palabraClave => element.innerHTML.includes(palabraClave)) || (element.classList.contains("match_subtitle") && element.innerHTML == '')) return
 
     if (element.firstElementChild?.classList.contains("discount_block") || element.dataset.convertido === "true") return
 
