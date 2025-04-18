@@ -1,16 +1,16 @@
 var precioDolar
-const clasesPrecio = ".discount_final_price, .discount_original_price, .StoreOriginalPrice, .game_area_dlc_price, .game_purchase_price, ._3j4dI1yA7cRfCvK8h406OB, ._3fFFsvII7Y2KXNLDk_krOW, .pk-LoKoNmmPK4GBiC9DR8, ._2WLaY5TxjBGVyuWe_6KS3N, .DOnsaVcV0Is-, .ywNldZ-YzEE-, .match_subtitle"
+const clasesPrecio = ".discount_final_price, .discount_original_price, .StoreOriginalPrice, .game_area_dlc_price, .game_purchase_price, ._3j4dI1yA7cRfCvK8h406OB, ._3fFFsvII7Y2KXNLDk_krOW, .pk-LoKoNmmPK4GBiC9DR8, ._2WLaY5TxjBGVyuWe_6KS3N, .DOnsaVcV0Is-, .ywNldZ-YzEE-, .match_subtitle, .regular_price"
 const noConvertir = [
     "ARS$",
     "Demo gratuita",
     "Free to Play",
     "Gratuito",
-    "Próximamente"
+    "Próximamente",
 ]
 
 async function obtenerDolar() {
     try {
-        const response = await fetch('https://dolarapi.com/v1/dolares/tarjeta')
+        const response = await fetch('https://dolarapi.com/v1/dolares/oficial')
         const data = await response.json()
         precioDolar = data.venta
     } catch (error) {
@@ -19,7 +19,7 @@ async function obtenerDolar() {
 }
 
 async function convertirPrecio(element) {
-    if (noConvertir.some(palabraClave => element.innerHTML.includes(palabraClave)) || (element.classList.contains("match_subtitle") && element.innerHTML == '')) return
+    if (noConvertir.some(palabraClave => element.innerHTML.includes(palabraClave)) || (element.classList.contains("match_subtitle") && element.innerHTML == '') || !element.innerHTML.includes("$")) return
 
     if (element.firstElementChild?.classList.contains("discount_block") || element.dataset.convertido === "true") return
 
